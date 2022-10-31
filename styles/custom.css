@@ -1,0 +1,148 @@
+* {
+    font-family: 'Cutive Mono', monospace;
+    font-size: 82.5%;
+}
+
+:root {
+    --mainBlue: #072AC8;
+    --brightYellow: #FDD85D;
+    --orangePk: #FF844F;
+    --pinkyRed: #F14B3D;
+    --greenPk: #60D394;
+    --lightGrey: #F8F9FA;
+    --really-gray: #595F65;
+
+    /* Colores types */
+    --bug: #059669;
+    --dragon: #2ec4b6;
+    --grass: #16c172;
+    --steel: #73e2a7;
+    --dark: #434649;
+    --flying: #8b9cad;
+    --normal: #c18cba;
+    --ghost: #9a54a1;
+    --rock: #63320b;
+    --ground: #885629;
+    --fighting: #c75000;
+    --fire: #ef271b;
+    --electric: #ffbf00;
+    --poison: #6e44ff;
+    --psychic: #db00b6;
+    --fairy: #ee4268;
+    --water: #4361ee;
+    --ice: #90e0ef;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    min-width: 360px;
+}
+
+/* Barra de busqueda */
+
+.searchPkmn {
+    height: 25vh;
+    padding-bottom: 0.5rem;
+}
+
+.searchPkmn__icon {
+    height: 5rem;
+    margin-top: 1.6rem;
+}
+
+.searchPkmn__searchBar {
+    height: 5rem;
+    background-color: var(--lightGrey);
+    border-radius: 2rem;
+}
+
+.searchPkmn__searchInput {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.searchPkmn__searchIcon {
+    height: 3rem;
+    margin: 0 1rem;
+}
+
+.searchPkmn__searchButton {
+    font-size: 1rem;
+    margin: 0rem 0.2rem 0rem 1rem;
+    height: 90%;
+    border-radius: 25px;
+    border: none;
+    background-color: var(--really-gray);
+    cursor: pointer;
+    color: white;
+    
+}
+
+/* Contenedor de tarjetas */
+
+.pkmnContainer {
+    height: 75vh;
+    overflow-y: scroll;
+}
+.card{
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--lightGrey);
+}
+
+.card__mainInfo {
+    width: 100%;
+    padding: 0 3rem;
+}
+
+.card__name {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+.card__id {
+    font-size: 1.4rem;
+}
+.card__img {
+    height: 15rem;
+    width: 65%;
+    /* background-color: var(--orangePk); */
+}
+.card__types {
+    height: 3rem;
+    /* background-color: var(--orangePk); */
+    margin-top: 1.4rem;
+    margin-bottom: 2rem;
+    width: 90%;
+}
+
+.card__types > p {
+    /* background-color: red; */
+    padding: 0 0.6rem;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.card__type {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+
+@media (min-width: 360px){
+    .card {
+        height: 24rem;
+        margin: 1.4rem;
+        width: 22rem;
+    }
+}
+
+@media (min-width: 576px) {
+    .searchPkmn__searchInput{
+        font-size: 1.4rem;
+    }
+}
+
+

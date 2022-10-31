@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/custom.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <header class="searchPkmn container-fluid bg-primary
+                   d-flex flex-column align-items-center" id="searchPkmn">
+        <img alt="Icono de la app" src="res/icons/pokeballIcon.png" class="searchPkmn__icon" />
+        <h2>Búsqueda</h2>
+        <div class="searchPkmn__searchBar 
+                    d-flex flex-row align-items-center">
+            <img src="res/icons/search.png" alt="Icono de busqueda" class="searchPkmn__searchIcon">
+            <input type="text" placeholder="Ej. Pikachu" class="searchPkmn__searchInput">
+            <input type="button" value="Buscar" class="searchPkmn__searchButton">
+        </div>
+
+    </header>
+    <section id="pkmnContainer" class="pkmnContainer bg-dark
+                    d-flex flex-row flex-wrap justify-content-center">
+    </section>  
+    <!-- Bootstrap -->
+    <script src="styles/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- fetch data script -->
+    <script src="scripts/fetchData.js"></script>
+</body>
+
+</html>
