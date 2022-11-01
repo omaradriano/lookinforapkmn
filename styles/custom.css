@@ -87,13 +87,14 @@ body {
 }
 .card{
     border-radius: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
     background-color: var(--lightGrey);
 }
 
 .card__mainInfo {
     width: 100%;
     padding: 0 3rem;
+    margin-top: 1rem;
 }
 
 .card__name {
@@ -106,6 +107,7 @@ body {
 .card__img {
     height: 15rem;
     width: 65%;
+    cursor: pointer;
     /* background-color: var(--orangePk); */
 }
 .card__types {
@@ -118,11 +120,14 @@ body {
 
 .card__types > p {
     /* background-color: red; */
-    padding: 0 0.6rem;
-    border-radius: 1.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 1.2rem;
     font-size: 1.2rem;
     margin-bottom: 0;
-    font-weight: 500;
+    font-weight: 700;
+    color: white;
+    /* -webkit-text-stroke: 1px black; */
+
 }
 
 .card__type {

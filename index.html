@@ -19,7 +19,25 @@
 </head>
 
 <body>
+    <!-- Modal para renderizar Pkmn -->
+    <div class="modal fade" id="renderModalView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal__pkmnName">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal__pkmnGeneralInfo">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Barra de busqueda por texto -->
     <header class="searchPkmn container-fluid bg-primary
                    d-flex flex-column align-items-center" id="searchPkmn">
         <img alt="Icono de la app" src="res/icons/pokeballIcon.png" class="searchPkmn__icon" />
@@ -27,14 +45,16 @@
         <div class="searchPkmn__searchBar 
                     d-flex flex-row align-items-center">
             <img src="res/icons/search.png" alt="Icono de busqueda" class="searchPkmn__searchIcon">
-            <input type="text" placeholder="Ej. Pikachu" class="searchPkmn__searchInput">
-            <input type="button" value="Buscar" class="searchPkmn__searchButton">
+            <input type="text" placeholder="Ej. Pikachu" class="searchPkmn__searchInput"
+                onkeydown="onkeypressSearch(event)">
+            <input type="button" value="Buscar" class="searchPkmn__searchButton" onclick="renderOnModal()">
         </div>
 
     </header>
+    <!-- Contenedor de cards Pkmn -->
     <section id="pkmnContainer" class="pkmnContainer bg-dark
                     d-flex flex-row flex-wrap justify-content-center">
-    </section>  
+    </section>
     <!-- Bootstrap -->
     <script src="styles/bootstrap/bootstrap.bundle.min.js"></script>
     <!-- fetch data script -->
