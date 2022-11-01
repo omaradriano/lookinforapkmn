@@ -1,11 +1,12 @@
 // Contenedor principal de tarjetas/cards
 let cardContainer = document.getElementById('pkmnContainer')
 
-async function returnPkmn(num) {
+async function returnPkmn(num = '') {
     try {
         let pkmnData = await (await fetch(`https://pokeapi.co/api/v2/pokemon/${num}`)).json()
+        console.log(pkmnData)
         return pkmnData
-    }catch(err){
+    } catch (err) {
         console.log('Se ha generado un error ', err)
     }
 }
@@ -37,7 +38,7 @@ async function renderPkmns(num) {
     let pkmnTypes = document.createElement('div');
     pkmnTypes.className = 'card__types d-flex flex-row align-items-center justify-content-evenly'
     pkmnTypes.setAttribute('id', 'cardTypes')
-    pkmnData.types.forEach( elem => {
+    pkmnData.types.forEach(elem => {
         let type = document.createElement('p')
         let bgColor = elem.type.name
         type.style.background = `var(--${bgColor})`
@@ -49,7 +50,7 @@ async function renderPkmns(num) {
 }
 
 renderPkmns(25)
-
+// returnPkmn()
 // onkeypressSearch
 // Filtrado y renderizado de tarjetas pkmn
 async function onkeypressSearch(e) {
@@ -58,13 +59,13 @@ async function onkeypressSearch(e) {
     let filterNames = pkmnNamesAll.filter((elem, index) => {
         return elem.startsWith(e.target.value)
     })
-    if(e.target.value !== ''){
+    if (e.target.value !== '') {
         pkmnNamesAll.forEach((elem, index) => {
-            if(elem.startsWith(e.target.value)){
+            if (elem.startsWith(e.target.value)) {
                 renderPkmns(index + 1)
             }
         })
-    }else{
+    } else {
         cardContainer.innerHTML = ''
     }
     // console.log(filterNames)
@@ -73,10 +74,37 @@ async function onkeypressSearch(e) {
 
 // Render y configuracion sobre el Modal
 let modal__pkmnName = document.getElementById('modal__pkmnName')
-let modal__pkmnGeneralInfo = document.getElementById('modal__pkmnGeneralInfo')
+// let modal__pkmnGeneralInfo = document.getElementById('modal__pkmnGeneralInfo')
+let modal__pkmnId = document.getElementById('modal__pkmnId')
+let modal__statsValues = document.getElementById('modal__statsValues')
+let modal__types = document.getElementById('modal__types')
+let modal__img = document.getElementById('modal__img')
 let renderOnModal = async (e) => {
     let pkmnData = await returnPkmn(e.target.parentElement.id)
-    modal__pkmnName.innerHTML = `${pkmnData.name}`
-    modal__pkmnGeneralInfo.innerHTML = `<img src='${pkmnData.sprites.front_default}'/>`
+    modal__pkmnName.innerHTML = `${pkmnData.name}` //Pone titulo al Modal con el nombre del Pkmn
+    modal__statsValues.innerHTML = ''
+    pkmnData.stats.forEach(elem => {
+        let everyStat = document.createElement('div')
+        everyStat.innerHTML = `<p>${elem.stat.name}</p>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: ${elem.base_stat}%;" aria-valuenow="${elem.base_stat}"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                `
+        modal__statsValues.append(everyStat)
+    })
+    modal__types.innerHTML = ''
+    pkmnData.types.forEach(elem => {
+        let type = document.createElement('img')
+        let typeIcon = elem.type.name
+        type.className = 'types__item'
+        type.setAttribute('alt', `Type ${typeIcon}`)
+        type.setAttribute('src', `./res/icons/${typeIcon}.png` )
+        modal__types.append(type)
+    })
+    modal__img.setAttribute('src', pkmnData.sprites.front_default)
+    modal__img.className = 'modal__img'
+
+
 }
 

@@ -135,6 +135,57 @@ body {
     margin: 0;
 }
 
+/* Configuración de ventana Modal */
+
+.modal--config {
+    height: 80%;
+}
+
+.modal__stats {
+    width: 100%;
+    /* background-color: red; */
+    height: 22rem;
+}
+.stats__left {
+    height: 95%;
+    width: 55%;
+    /* background-color: yellow; */
+    margin-left: 0.5rem;
+    /* padding: 1rem; */
+}
+
+.stats__right{
+    width: 45%;
+    height: 95%;
+    /* background-color: red; */
+    padding: 1rem;
+}
+
+.modal__img {
+    height: 12rem;
+    margin-top: 1rem;
+}
+
+.types__item {
+    height: 2.6rem;
+    margin-right: 0.5rem;
+    margin-top: 3.5rem;
+}
+
+/* .right__types {
+    width: 100%;
+} */
+.left__name > p {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.left__statsValues  p {
+    font-size: 1.2rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
 
 @media (min-width: 360px){
     .card {
