@@ -24,14 +24,13 @@ async function renderPkmns(num) {
     let pkmnCard = document.createElement('div');
     pkmnCard.setAttribute('name', pkmnData.id)
     pkmnCard.setAttribute('id', pkmnData.id)
-    // pkmnCard.setAttribute('onclick', renderOnModal)
     pkmnCard.setAttribute('data-bs-toggle', 'modal')
     pkmnCard.setAttribute('data-bs-target', '#renderModalView')
     pkmnCard.className = 'card d-flex flex-column align-items-center p-2'
     pkmnCard.innerHTML = `
                         <div class="card__mainInfo d-flex flex-row align-items-center justify-content-between">
                             <p class="card__name">${pkmnData.name}</p>
-                            <p class="card__id">#000</p>
+                            <p class="card__id">#${changeIDVisually(pkmnData.id)}</p>
                         </div>
                         <img src="${pkmnData.sprites.front_default}" alt="Imagen de Pkmn" class="card__img" onclick='renderOnModal(event)'>
                         `
@@ -47,6 +46,19 @@ async function renderPkmns(num) {
     })
     pkmnCard.append(pkmnTypes)
     cardContainer.append(pkmnCard)
+}
+
+// Modificar ID visualmente
+function changeIDVisually(id){
+    let coercedId = ''+id
+    switch (coercedId.length) {
+        case 1:
+            return `00${coercedId}`
+        case 2:
+            return `0${coercedId}`
+        case 3:
+            return `${coercedId}`
+    }
 }
 
 renderPkmns(25)
@@ -71,21 +83,27 @@ async function onkeypressSearch(e) {
     // console.log(filterNames)
 }
 
-
 // Render y configuracion sobre el Modal
 let modal__pkmnName = document.getElementById('modal__pkmnName')
 // let modal__pkmnGeneralInfo = document.getElementById('modal__pkmnGeneralInfo')
 let modal__pkmnId = document.getElementById('modal__pkmnId')
-let modal__statsValues = document.getElementById('modal__statsValues')
-let modal__types = document.getElementById('modal__types')
-let modal__img = document.getElementById('modal__img')
+let modal__statsValues = document.getElementById('modal__statsValues') //Renderizar datos de stats en modal
+let modal__types = document.getElementById('modal__types') //Renderizar tipos en el modal
+let modal__img = document.getElementById('modal__img') //Renderizar imangen en modal
+let physicalStats__height = document.getElementById('physicalStats__height') //Renderizar peso
+let physicalStats__weight = document.getElementById('physicalStats__weight') //renderizar estatura
+let left__name = document.getElementById('left__name')
 let renderOnModal = async (e) => {
     let pkmnData = await returnPkmn(e.target.parentElement.id)
+    left__name.innerHTML = 
+                        `
+                        <p id="modal__pkmnId">#${changeIDVisually(pkmnData.id)}</p>
+                        `
     modal__pkmnName.innerHTML = `${pkmnData.name}` //Pone titulo al Modal con el nombre del Pkmn
     modal__statsValues.innerHTML = ''
     pkmnData.stats.forEach(elem => {
         let everyStat = document.createElement('div')
-        everyStat.innerHTML = `<p>${elem.stat.name}</p>
+        everyStat.innerHTML = `<p>${elem.stat.name} <span class='bold'>${elem.base_stat}</span></p>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: ${elem.base_stat}%;" aria-valuenow="${elem.base_stat}"
                                         aria-valuemin="0" aria-valuemax="100"></div>
@@ -104,7 +122,15 @@ let renderOnModal = async (e) => {
     })
     modal__img.setAttribute('src', pkmnData.sprites.front_default)
     modal__img.className = 'modal__img'
-
-
+    physicalStats__height.innerHTML =
+                                    `
+                                    <p class='me-4'>${pkmnData.height / 10}<span class='bold'>m</span></p>
+                                    <p>${((pkmnData.height*10)/30.48).toFixed(2)}<span class='bold'>inch</span></p>
+                                    `
+    physicalStats__weight.innerHTML =
+                                    `
+                                    <p class='me-4'>${pkmnData.weight / 100}<span class='bold'>kg</span></p>
+                                    <p>${((pkmnData.weight/100)/.453).toFixed(2)}<span class='bold'>lb</span></p>
+                                    `                               
 }
 

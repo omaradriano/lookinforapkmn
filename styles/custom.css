@@ -3,6 +3,11 @@
     font-size: 82.5%;
 }
 
+/* Clases generales */
+.bold {
+    font-weight: 700;
+}
+
 :root {
     --mainBlue: #072AC8;
     --brightYellow: #FDD85D;
@@ -184,6 +189,34 @@ body {
     font-size: 1.2rem;
     padding-bottom: 0;
     margin-bottom: 0;
+}
+.modal__breeding{
+    width: 100%;
+    padding: 1rem;
+}
+.physicalStats {
+    width: 100%;
+    margin-top: 1rem;
+}
+.physicalStats__height, .physicalStats__weight {
+    background-color: var(--lightGrey);
+    border: 2px solid rgb(148, 148, 148);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.physicalStats__left > p, .physicalStats__right > p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.physicalStats__height > p{
+    margin-bottom: 0;
+    font-size: 1.2rem;
+}
+
+.physicalStats__weight > p{
+    margin-bottom: 0;
+    font-size: 1.2rem;
 }
 
 

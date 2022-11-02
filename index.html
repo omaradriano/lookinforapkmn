@@ -30,8 +30,8 @@
                 <div class="modal-body" id="modal__pkmnGeneralInfo">
                     <div class="modal__stats d-flex flex-row align-items-center">
                         <div class="stats__left">
-                            <div class="left__name">
-                                <p id="modal__pkmnId">#000</p>
+                            <div class="left__name" id="left__name">
+                                <!-- <p id="modal__pkmnId">#000</p> -->
                             </div>
                             <div class="left__statsValues" id="modal__statsValues">
                                 <!-- Aquí se renderizan las stats -->
@@ -49,9 +49,27 @@
                             <img alt="name" id="modal__img">
                         </div>
                     </div>
+
+                    <div class="modal__breeding d-flex flex-column" id="modal__breeding">
+                        <h2>Breeding</h2>
+                        <div class="physicalStats d-flex flex-row align-items-center justify-content-evenly">
+                            <div class="physicalStats__left d-flex flex-column align-items-center">
+                                <p>Height</p>
+                                <div class="physicalStats__height d-flex flex-row align-items-center" id="physicalStats__height">
+                                    <!-- Insertado estatura -->
+                                </div>
+                            </div>
+                            <div class="physicalStats__right d-flex flex-column align-items-center">
+                                <p>Weight</p>
+                                <div class="physicalStats__weight d-flex flex-row align-items-center" id="physicalStats__weight">
+                                    <!-- insertado peso -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
