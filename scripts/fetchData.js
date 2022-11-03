@@ -129,8 +129,25 @@ let renderOnModal = async (e) => {
                                     `
     physicalStats__weight.innerHTML =
                                     `
-                                    <p class='me-4'>${pkmnData.weight / 100}<span class='bold'>kg</span></p>
-                                    <p>${((pkmnData.weight/100)/.453).toFixed(2)}<span class='bold'>lb</span></p>
+                                    <p class='me-4'>${pkmnData.weight / 10}<span class='bold'>kg</span></p>
+                                    <p>${((pkmnData.weight/10)/.453).toFixed(2)}<span class='bold'>lb</span></p>
                                     `                               
 }
 
+// Intersection Observer
+
+function* generatePkmnByScroll() {
+    let index = 0
+    while(index <= 900){
+        yield index++
+    }
+}
+let generate = generatePkmnByScroll()
+let optionsOnScroll = {
+    // root: cardContainer,
+    rootMargin: '0px',
+    threshold: 1
+}
+let renderOnScroll = new IntersectionObserver(cb, optionsOnScroll)
+
+renderOnScroll.observe(cardContainer)
