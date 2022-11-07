@@ -1,5 +1,7 @@
 // Contenedor principal de tarjetas/cards
 let cardContainer = document.getElementById('pkmnContainer')
+let lastRenderedChild = null
+let onTyping = true //Bandera para activar o desactivar scroll dependiendo si se escribe en onkeysearch o no
 
 async function returnPkmn(num = '') {
     try {
@@ -46,11 +48,17 @@ async function renderPkmns(num) {
     })
     pkmnCard.append(pkmnTypes)
     cardContainer.append(pkmnCard)
+
+    lastRenderedChild = cardContainer.lastElementChild
+    console.log('Last rendered')
+    console.log(lastRenderedChild)
+    observer.observe(lastRenderedChild)
 }
 
 // Modificar ID visualmente
-function changeIDVisually(id){
-    let coercedId = ''+id
+//Renderiza el numero del PKMN dependiendo de la cantidad de caracteres que tenga el numero | EJ #1: agrega dos ceros al principio
+function changeIDVisually(id) {
+    let coercedId = '' + id
     switch (coercedId.length) {
         case 1:
             return `00${coercedId}`
@@ -60,25 +68,28 @@ function changeIDVisually(id){
             return `${coercedId}`
     }
 }
-
-renderPkmns(25)
-// returnPkmn()
 // onkeypressSearch
 // Filtrado y renderizado de tarjetas pkmn
 async function onkeypressSearch(e) {
+    // observer.unobserve()
     cardContainer.innerHTML = ''
     let pkmnNamesAll = await returnPkmnForData()
     let filterNames = pkmnNamesAll.filter((elem, index) => {
+        onTyping = false //Se desactiva el estado de scroll infinito
         return elem.startsWith(e.target.value)
     })
     if (e.target.value !== '') {
         pkmnNamesAll.forEach((elem, index) => {
+            onTyping = false //Se desactiva el estado de scroll infinito
             if (elem.startsWith(e.target.value)) {
                 renderPkmns(index + 1)
             }
         })
     } else {
+        onTyping = true //re activa el scroll infinito
         cardContainer.innerHTML = ''
+        generate = idGenerator() //Reinicia el generador en caso de que se borren los datos
+        renderFirst() //Vuelve a generar los primeros 5 cards
     }
     // console.log(filterNames)
 }
@@ -94,9 +105,10 @@ let physicalStats__height = document.getElementById('physicalStats__height') //R
 let physicalStats__weight = document.getElementById('physicalStats__weight') //renderizar estatura
 let left__name = document.getElementById('left__name')
 let renderOnModal = async (e) => {
+    e.stopImmediatePropagation()
     let pkmnData = await returnPkmn(e.target.parentElement.id)
-    left__name.innerHTML = 
-                        `
+    left__name.innerHTML =
+        `
                         <p id="modal__pkmnId">#${changeIDVisually(pkmnData.id)}</p>
                         `
     modal__pkmnName.innerHTML = `${pkmnData.name}` //Pone titulo al Modal con el nombre del Pkmn
@@ -117,37 +129,73 @@ let renderOnModal = async (e) => {
         let typeIcon = elem.type.name
         type.className = 'types__item'
         type.setAttribute('alt', `Type ${typeIcon}`)
-        type.setAttribute('src', `./res/icons/${typeIcon}.png` )
+        type.setAttribute('src', `./res/icons/${typeIcon}.png`)
         modal__types.append(type)
     })
     modal__img.setAttribute('src', pkmnData.sprites.front_default)
     modal__img.className = 'modal__img'
     physicalStats__height.innerHTML =
-                                    `
+        `
                                     <p class='me-4'>${pkmnData.height / 10}<span class='bold'>m</span></p>
-                                    <p>${((pkmnData.height*10)/30.48).toFixed(2)}<span class='bold'>inch</span></p>
+                                    <p>${((pkmnData.height * 10) / 30.48).toFixed(2)}<span class='bold'>inch</span></p>
                                     `
     physicalStats__weight.innerHTML =
-                                    `
+        `
                                     <p class='me-4'>${pkmnData.weight / 10}<span class='bold'>kg</span></p>
-                                    <p>${((pkmnData.weight/10)/.453).toFixed(2)}<span class='bold'>lb</span></p>
-                                    `                               
+                                    <p>${((pkmnData.weight / 10) / .453).toFixed(2)}<span class='bold'>lb</span></p>
+                                    `
 }
 
-// Intersection Observer
+// Generador con la primera iteracion
 
-function* generatePkmnByScroll() {
-    let index = 0
-    while(index <= 900){
-        yield index++
+function* idGenerator(start = 6) {
+    while (start <= 900) {
+        yield start++
     }
 }
-let generate = generatePkmnByScroll()
-let optionsOnScroll = {
-    // root: cardContainer,
-    rootMargin: '0px',
-    threshold: 1
-}
-let renderOnScroll = new IntersectionObserver(cb, optionsOnScroll)
+let generate = idGenerator()
 
-renderOnScroll.observe(cardContainer)
+// IntersectionObserver
+const options = {
+    root: cardContainer,
+    marginRoot: '200px',
+    threshold: 0.2
+}
+// let stateDown = null 
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(elem => {
+        // console.log(observer)
+        if(elem.isIntersecting && (elem.target === lastRenderedChild) && onTyping){
+            //Primer validador: si el elemento entra en el root(cardContainer)
+            //Segundo validador: verifica que sea el ultimo elemento el que se observe
+            //Tercer validador: Verifica el estado si hay una busqueda en onkeypress para no generar incongruencia
+            renderPkmns(generate.next().value)
+        }
+    })
+}, options)
+ 
+//El siguiente codigo no es necesario pero igual lo dejo por si acaso, solo recuerda usar la bandera stateDown despues
+
+// let lastPosition = 0;
+// cardContainer.addEventListener('scroll', function () {
+//     if (cardContainer.scrollTop > lastPosition) {
+//         lastPosition = cardContainer.scrollTop
+//         stateDown = true
+//     } else {
+//         lastPosition = cardContainer.scrollTop
+//         stateDown = false
+//     }
+
+// });
+
+//Esto va a ejecutar cuando la pagina se cargue por primera vez
+let renderFirst = () => {
+    for (let i = 1; i <= 5; i++) {
+        renderPkmns(i)
+
+    }
+}
+window.onload = renderFirst()
+
+
+
