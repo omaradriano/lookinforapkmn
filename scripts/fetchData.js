@@ -74,24 +74,22 @@ async function onkeypressSearch(e) {
     // observer.unobserve()
     cardContainer.innerHTML = ''
     let pkmnNamesAll = await returnPkmnForData()
-    let filterNames = pkmnNamesAll.filter((elem, index) => {
-        onTyping = false //Se desactiva el estado de scroll infinito
-        return elem.startsWith(e.target.value)
-    })
-    if (e.target.value !== '') {
-        pkmnNamesAll.forEach((elem, index) => {
-            onTyping = false //Se desactiva el estado de scroll infinito
-            if (elem.startsWith(e.target.value)) {
-                renderPkmns(index + 1)
-            }
-        })
-    } else {
+    const searchText = e.target.value.toLowerCase()
+
+    if (searchText === '') {
         onTyping = true //re activa el scroll infinito
         cardContainer.innerHTML = ''
-        generate = idGenerator() //Reinicia el generador en caso de que se borren los datos
+        idGenerator() //Reinicia el generador en caso de que se borren los datos
         renderFirst() //Vuelve a generar los primeros 5 cards
+        return
     }
-    // console.log(filterNames)
+
+    pkmnNamesAll.forEach((elem, index) => {
+        onTyping = false //Se desactiva el estado de scroll infinito
+        if (elem.startsWith(searchText)) {
+            renderPkmns(index + 1)
+        }
+    })
 }
 
 // Render y configuracion sobre el Modal
