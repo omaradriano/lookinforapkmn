@@ -73,6 +73,7 @@ function changeIDVisually(id) {
 async function onkeypressSearch(e) {
     // observer.unobserve()
     cardContainer.innerHTML = ''
+    console.log(e.target.value)
     let pkmnNamesAll = await returnPkmnForData()
     let filterNames = pkmnNamesAll.filter((elem, index) => {
         onTyping = false //Se desactiva el estado de scroll infinito
