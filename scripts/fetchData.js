@@ -73,6 +73,7 @@ function changeIDVisually(id) {
 async function onkeypressSearch(e) {
     // observer.unobserve()
     cardContainer.innerHTML = ''
+    console.log(e.target.value)
     let pkmnNamesAll = await returnPkmnForData()
     const searchText = e.target.value.toLowerCase()
 
